@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing — Calorie AI</title>
+    <!-- Load premium-feel fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- CSS RESET & VARIABLES (Same as index.html) --- */
+        :root {
+            --bg-main: #050505;
+            --bg-secondary: #111111;
+            --text-primary: #ffffff;
+            --text-secondary: #a1a1aa;
+            --accent-glow: #00f5a0; /* Vibrant teal/green glow */
+            --accent-gradient: linear-gradient(135deg, #00f5a0, #00d9f5);
+            --container-width: 1100px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+            
+            /* Add background glow effect */
+            background-image: radial-gradient(circle at 50% 0%, rgba(0, 245, 160, 0.15), transparent 40%);
+            background-repeat: no-repeat;
+        }
+
+        /* --- UTILITIES (Same as index.html) --- */
+        .container {
+            width: 90%;
+            max-width: var(--container-width);
+            margin: 0 auto;
+        }
+
+        .text-gradient {
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+        }
+
+        /* --- NAVIGATION (Same as index.html) --- */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(5, 5, 5, 0.8);
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 1.5rem;
+            letter-spacing: -1px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+
+        .logo-icon {
+            width: 30px;
+            height: 30px;
+            background: var(--accent-gradient);
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 245, 160, 0.4);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+            padding: 0.5rem 0.5rem;
+        }
+
+        .nav-links a:not(.btn):hover {
+            color: var(--text-primary);
+        }
+        
+        .nav-links a.active {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: var(--accent-gradient);
+            color: #000;
+            box-shadow: 0 0 25px rgba(0, 245, 160, 0.3);
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 40px rgba(0, 245, 160, 0.5);
+        }
+        
+        /* Mobile Nav Toggle */
+        .mobile-toggle {
+            display: none;
+            cursor: pointer;
+            width: 24px;
+            height: 24px;
+            flex-direction: column;
+            justify-content: space-around;
+        }
+        .mobile-toggle span {
+            width: 100%;
+            height: 2px;
+            background: var(--text-primary);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        /* --- HERO SECTION (Same as index.html) --- */
+        .hero {
+            padding: 6rem 0; /* Slightly less padding for subpage */
+            text-align: center;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 7vw, 4.5rem);
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 3rem auto;
+        }
+        
+        /* --- GLASS CARDS (Same as index.html) --- */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 2.5rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        /* --- NEW: PRICING GRID STYLES --- */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+            align-items: stretch; /* Makes cards same height */
+        }
+
+        .pricing-card {
+            display: flex;
+            flex-direction: column;
+            height: 100%; /* Ensures flex works */
+        }
+        
+        /* Add glow to the main free plan */
+        .pricing-card.glow-border {
+             border-color: rgba(0, 245, 160, 0.3);
+             box-shadow: 0 0 50px rgba(0, 245, 160, 0.1);
+        }
+
+        .pricing-card-header {
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .pricing-card-header .plan-name {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        .pricing-card-header .plan-price {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-top: 0.5rem;
+        }
+        .pricing-card-header .plan-price span {
+            font-size: 1rem;
+            font-weight: 400;
+            color: var(--text-secondary);
+        }
+        .pricing-card-body {
+            flex-grow: 1; /* Pushes button to bottom */
+            padding: 1.5rem 0;
+        }
+        .pricing-card-body ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .pricing-card-body li {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .pricing-card-body li::before {
+            content: '✓';
+            color: var(--accent-glow);
+            font-weight: 800;
+            font-size: 1.2rem;
+        }
+        .pricing-card-footer {
+            margin-top: auto; /* Pushes button to bottom */
+        }
+        
+        /* "Coming Soon" / Disabled state */
+        .pricing-card.disabled {
+            opacity: 0.5;
+            /* filter: grayscale(80%); */ /* This is a bit too much */
+        }
+        
+        .pricing-card.disabled li::before {
+            color: var(--text-secondary);
+        }
+        
+        .btn-disabled {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-secondary);
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+        .btn-disabled:hover {
+            transform: none;
+            box-shadow: none;
+        }
+
+
+        /* --- FOOTER (Same as index.html) --- */
+        footer {
+            border-top: 1px solid rgba(255,255,255,0.05);
+            padding: 3rem 0;
+            text-align: center;
+            margin-top: 5rem;
+            color: var(--text-secondary);
+        }
+        
+        /* --- RESPONSIVE (Same as index.html) --- */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            .mobile-toggle {
+                display: flex;
+            }
+            .hero {
+                padding: 5rem 0;
+            }
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            .hero p {
+                font-size: 1rem;
+            }
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+            .glass-card {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center;">
+            <a href="index.html" class="logo">
+                <div class="logo-icon"></div>
+                CalorieAI
+            </a>
+            <div class="nav-links">
+                <a href="index.html#features">Features</a>
+                <!-- Added .active class to highlight current page -->
+                <a href="https://markx51.me/public" class="active">Pricing</a>
+                <a href="login.php">Login</a>
+                <a href="index.html#features" class="btn btn-primary" style="margin-left: 1rem;">See Demo</a>
+            </div>
+            <!-- Mobile Menu Button -->
+            <div class="mobile-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Pricing Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>
+                Find the <span class="text-gradient">perfect plan.</span>
+            </h1>
+            <p>Start for free. No credit card required. Upgrade when you're ready to unlock powerful pro features.</p>
+        </div>
+    </section>
+
+    <!-- Pricing Grid -->
+    <section class="container">
+        <div class="pricing-grid">
+            
+            <!-- Plan 1: Free -->
+            <div class="glass-card pricing-card glow-border">
+                <div class="pricing-card-header">
+                    <span class="plan-name">Free</span>
+                    <div class="plan-price">$0 <span>/ month</span></div>
+                </div>
+                <div class="pricing-card-body">
+                    <ul>
+                        <li>Basic Food Logging</li>
+                        <li>Calorie Tracking</li>
+                        <li>10 Vision Scans per week</li>
+                        <li>Community Support</li>
+                    </ul>
+                </div>
+                <div class="pricing-card-footer">
+                    <!-- Links to login.php as requested -->
+                    <a href="login.php" class="btn btn-primary" style="width: 100%; text-align: center;">Get Started for Free</a>
+                </div>
+            </div>
+
+            <!-- Plan 2: Pro (Coming Soon) -->
+            <div class="glass-card pricing-card disabled">
+                <div class="pricing-card-header">
+                    <span class="plan-name">Pro</span>
+                    <div class="plan-price">$9 <span>/ month</span></div>
+                </div>
+                <div class="pricing-card-body">
+                    <ul>
+                        <li>Unlimited Vision Scans</li>
+                        <li>Full Macro & Micronutrient Tracking</li>
+                        <li>AI-Powered Meal Suggestions</li>
+                        <li>Recipe Importer</li>
+                        <li>Priority Support</li>
+                    </ul>
+                </div>
+                <div class="pricing-card-footer">
+                    <a class="btn btn-disabled" style="width: 100%; text-align: center;">Coming Soon</a>
+                </div>
+            </div>
+
+            <!-- Plan 3: Nutritionist (Coming Soon) -->
+            <div class="glass-card pricing-card disabled">
+                <div class="pricing-card-header">
+                    <span class="plan-name">Nutritionist</span>
+                    <div class="plan-price">$49 <span>/ month</span></div>
+                </div>
+                <div class="pricing-card-body">
+                    <ul>
+                        <li>All Pro Features</li>
+                        <li>Client Management Dashboard</li>
+                        <li>Export Client Data (PDF, CSV)</li>
+                        <li>Shared Meal Plans</li>
+                        <li>Dedicated Account Manager</li>
+                    </ul>
+                </div>
+                <div class="pricing-card-footer">
+                    <a class="btn btn-disabled" style="width: 100%; text-align: center;">Coming Soon</a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="logo" style="justify-content: center; margin-bottom: 1rem; opacity: 0.5;">
+                <div class="logo-icon" style="width: 20px; height: 20px;"></div>
+                CalorieAI
+            </div>
+            <p>© 2025 Marvels. All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
