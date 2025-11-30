@@ -3,7 +3,7 @@ require_once __DIR__ . '/db.php';
 
 // Gemini API key + endpoint (only one)
 if (!defined('LLM_KEY')) {
-    define('LLM_KEY', 'AIzaSyDb88WswFN9ecUsMdz2y-Zs6g0mkhqXguA');
+    define('LLM_KEY', 'enter gemini key');
 }
 if (!defined('LLM_ENDPOINT')) {
     define('LLM_ENDPOINT', 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent');
